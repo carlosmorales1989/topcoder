@@ -1,20 +1,31 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-
+/**
+ * 
+ * @author Asistente
+ *
+ */
 
 public class FlowerGarden {
 
 	public int[] getOrdering(int[] height, int[] bloom, int[] wilt){
-		int[] heights2 = height.clone();
-		Arrays.sort(heights2);
+		Flower[] flowers = new Flower[height.length];
+		for (int i = 0; i < flowers.length; i++) {
+			flowers[i] = new Flower();
+			flowers[i].height = height[i];
+			flowers[i].bloom = bloom[i];
+			flowers[i].wilt = wilt[i];
+		}		
+		
+		Arrays.sort(flowers);	
 		
 		ArrayList<Integer> result = new ArrayList();
 		result.add(0);
-		for (int i = 1; i < height.length; i++) {
-			int bloomi = bloom[i];
-			int wilti = wilt[i];
-			int heighti = height[i];
+		for (int i = 1; i < height.length; i++) {			
+			int bloomi = flowers[i].bloom;
+			int wilti = flowers[i].wilt;
+			int heighti = flowers[i].height;
 			boolean added = false;
 			for (int j = 0; j < result.size() && !added; j++) {
 				int k = result.get(j);
@@ -54,6 +65,24 @@ public class FlowerGarden {
 				new int[]{4,9,14,19,24})));
 	}
 	
-	class Flower
+	class Flower implements Comparable<Flower>{
+		
+		int height;
+		
+		int bloom;
+		
+		int wilt;
+
+		@Override
+		public int compareTo(Flower o) {
+			if(o.height> height)
+				return -1;
+			else if(o.height < height)
+				return 1;
+			else
+				return 0;
+		}
+		
+	}
 	
 }
